@@ -153,12 +153,7 @@ export function TraditionalStyleSelector({ onStyleSelect, selectedStyle, classNa
                         <p className="text-xs text-muted-foreground leading-relaxed">
                           {style.description}
                         </p>
-                        <Badge 
-                          variant="secondary" 
-                          className="mt-2 text-[10px] px-2 py-0.5"
-                        >
-                          {style.category}
-                        </Badge>
+                        
                       </div>
                     </div>
                   </div>

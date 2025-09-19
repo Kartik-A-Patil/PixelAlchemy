@@ -133,12 +133,7 @@ export function TrendingStyleSelector({
             <DialogTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-primary" />
               Trending Art Styles
-              <Badge
-                variant="secondary"
-                className="text-xs bg-gradient-to-r from-pink-500 to-violet-500 text-white border-0"
-              >
-                🔥 Hot
-              </Badge>
+              
             </DialogTitle>
           </DialogHeader>
 
@@ -178,20 +173,7 @@ export function TrendingStyleSelector({
                         <p className="text-xs text-muted-foreground leading-relaxed mb-2">
                           {style.description}
                         </p>
-                        <div className="flex items-center justify-between">
-                          <Badge
-                            variant="secondary"
-                            className="text-[10px] px-2 py-0.5"
-                          >
-                            {style.category}
-                          </Badge>
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] px-1.5 py-0.5 bg-gradient-to-r from-pink-50 to-violet-50 border-pink-200"
-                          >
-                            🔥 Hot
-                          </Badge>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
