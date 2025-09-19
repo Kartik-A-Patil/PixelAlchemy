@@ -69,11 +69,11 @@ export default function Setup() {
   return (
     <div className="h-[95vh] bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
       {/* Main Content */}
-      <main className="flex-1 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative mt-8">
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 flex items-start justify-center relative mt-8">
         <Button
-          variant="outline"
+          variant='outline'
           onClick={handleBack}
-          className="hover:bg-accent"
+          className="hover:bg-accent mr-5 mt-5"
           data-testid="button-back-left"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
