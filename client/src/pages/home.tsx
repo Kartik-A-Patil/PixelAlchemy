@@ -14,7 +14,10 @@ import {
   Zap,
   Bot,
 } from "lucide-react";
-
+import { Cover } from "@/components/ui/cover";
+import {TextGenerateEffect} from "@/components/ui/text-generate-effect";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import { cn } from "@/lib/utils";
 export default function Home() {
   const [, setLocation] = useLocation();
   const { isConfigured } = useGemini();
@@ -35,30 +38,34 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <BackgroundLines className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 z-0">
       {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 py-6">
+      
+      <header className="px-4 sm:px-6 lg:px-8 py-6 z-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Logo />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8">
+      <main className="px-4 sm:px-6 lg:px-8 z-20">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
           <div className="text-center py-12">
             <div className="inline-flex items-center space-x-2 bg-primary/5 px-4 py-2 rounded-full mb-6">
               <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">
-                AI-Powered Image Editing
+              <span className="text-base font-medium text-primary">
+                <span className="text-blue-500 dark:text-blue-500">
+                  AI-Powered{" "}
+                </span>
+                Image Editing
               </span>
             </div>
 
             <h2 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Transform Images with
               <br />
-              Natural Language
+              <Cover>Natural Language</Cover>
             </h2>
 
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
@@ -71,10 +78,10 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={handleGetStarted}
-                  className="h-12 px-8 text-base"
+                  className="h-12 px-8 text-base z-50"
                   data-testid="button-get-started"
                 >
-                  <Key className="mr-2 h-5 w-5" />
+                  <Key className="mr-2 h-5 w-5 " />
                   Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -94,7 +101,7 @@ export default function Home() {
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 z-50">
             <Card className="border-2 border-muted/50 hover:border-primary/20 transition-colors">
               <CardHeader className="text-center pb-4">
                 <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
@@ -193,9 +200,7 @@ export default function Home() {
                     }}
                     data-testid={`example-prompt-${index}`}
                   >
-                    <span className="text-base font-semibold text-foreground text-center group-hover:text-primary transition-colors">
-                      {prompt}
-                    </span>
+                    <TextGenerateEffect words={prompt} />
                     <span className="absolute top-2 right-2 opacity-0 bg-white group-hover:opacity-100 transition-opacity text-black text-xs font-bold px-2 py-1 rounded">
                       Copy
                     </span>
@@ -219,6 +224,6 @@ export default function Home() {
           )}
         </div>
       </main>
-    </div>
+    </BackgroundLines>
   );
 }

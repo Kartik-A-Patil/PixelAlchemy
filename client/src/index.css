@@ -7,8 +7,8 @@
   --foreground: #ebebeb;
   --card: #101011;
   --card-foreground: hsl(0, 0%, 100%);
-  --popover: hsl(45, 25%, 97%);
-  --popover-foreground: hsl(0, 0%, 100%);
+  --popover: #1a1a1b;
+  --popover-foreground: #ebebeb;
   --primary: #ffffff;
   --primary-foreground: #000000;
   --secondary: #4d4d4d;

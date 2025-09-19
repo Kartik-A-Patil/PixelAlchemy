@@ -29,6 +29,7 @@ export interface AISuggestion {
   description: string;
   category: 'enhancement' | 'removal' | 'style' | 'fix';
   prompt: string;
+  highlight?: { x: number; y: number; width: number; height: number } | null;
 }
 
 export interface SelectedEdit {
@@ -110,11 +111,3 @@ export const QUICK_ACTIONS = [
   { name: 'Artistic Style', icon: 'fas fa-brush', prompt: 'Apply an artistic style to this image, making it look like a painting or artistic rendition' }
 ];
 
-export const PROMPT_SUGGESTIONS = [
-  'Remove background',
-  'Make it Pixar style',
-  'Enhance lighting',
-  'Add vintage filter',
-  'Make it black and white',
-  'Increase contrast'
-];

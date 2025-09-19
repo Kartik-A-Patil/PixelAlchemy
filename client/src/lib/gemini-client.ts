@@ -51,31 +51,35 @@ export class GeminiClient {
       const mimeType = imageFile.type;
 
       const analysisPrompt = `
-        Analyze this image thoroughly and provide a JSON response with the following structure:
+        You are an expert photo editor AI. Analyze the uploaded image in detail and return a JSON response with the following structure:
         {
           "objects": ["list of main objects, people, animals detected"],
-          "style": "description of the photo style (e.g., 'casual outdoor photo', 'professional portrait', 'artistic composition')",
+          "style": "short description of the photo style (e.g., 'casual outdoor photo', 'professional portrait', 'artistic composition')",
           "issues": ["list of potential issues like 'background clutter', 'low contrast', 'overexposed', 'blurry', 'poor lighting'"],
           "description": "detailed description of what's in the image",
           "suggestions": [
             {
               "id": "unique_id",
-              "label": "Remove background clutter",
-              "description": "Clean up distracting elements in the background",
-              "category": "removal",
-              "prompt": "Remove clutter and distracting objects from the background"
+              "label": "Short, actionable edit label (e.g., 'Remove background clutter')",
+              "description": "1-2 sentence explanation of the edit and its benefit",
+              "category": "removal | enhancement | style | fix",
+              "prompt": "A clear, concise prompt for an AI image editor to perform this edit",
+              "highlight": { "x": 0, "y": 0, "width": 0, "height": 0 } // Optional: bounding box in image coordinates (0-1) for the region affected by this suggestion
             }
           ]
         }
 
         For suggestions, use these categories:
         - "enhancement": improving quality, colors, lighting
-        - "removal": removing unwanted objects or elements  
+        - "removal": removing unwanted objects or elements
         - "style": applying artistic effects or filters
         - "fix": correcting exposure, blur, or other technical issues
 
-        Provide 3-6 specific, actionable suggestions based on what you observe.
-        Only return the JSON, no additional text.
+        Requirements:
+        - Provide 3-6 specific, actionable suggestions based on the image content and issues.
+        - For each suggestion, if possible, include a "highlight" field with a bounding box (x, y, width, height, all 0-1 relative to image size) showing the region affected by the edit. If not applicable, set highlight to null.
+        - Make suggestions diverse (not all the same type) and relevant to the image.
+        - Only return the JSON, no extra text or explanation.
       `;
 
       // Use gemini-2.5-flash-lite for analysis - it's faster and more cost-effective for analysis tasks

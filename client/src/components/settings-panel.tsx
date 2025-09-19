@@ -1,12 +1,18 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { GeminiConfig, PRESET_MODES } from '@/types/image-editor';
-import { Settings, X, RotateCcw, Check } from 'lucide-react';
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { GeminiConfig, PRESET_MODES } from "@/types/image-editor";
+import { Settings, X, RotateCcw, Check } from "lucide-react";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -16,17 +22,19 @@ interface SettingsPanelProps {
   onResetConfig: () => void;
 }
 
-export function SettingsPanel({ 
-  open, 
-  onOpenChange, 
-  config, 
-  onConfigChange, 
-  onResetConfig 
+export function SettingsPanel({
+  open,
+  onOpenChange,
+  config,
+  onConfigChange,
+  onResetConfig,
 }: SettingsPanelProps) {
-  const [activePreset, setActivePreset] = React.useState<string | null>('Stable');
+  const [activePreset, setActivePreset] = React.useState<string | null>(
+    "Stable"
+  );
 
   const applyPreset = (presetName: string) => {
-    const preset = PRESET_MODES.find(p => p.name === presetName);
+    const preset = PRESET_MODES.find((p) => p.name === presetName);
     if (preset) {
       onConfigChange(preset.config);
       setActivePreset(presetName);
@@ -37,7 +45,7 @@ export function SettingsPanel({
 
   return (
     <div
-      className="fixed right-0 top-16 bottom-0 w-80 bg-card border-l border-border p-6 overflow-y-auto z-40 transform transition-transform duration-300"
+      className="fixed right-0 top-0 bottom-0 w-96 bg-card border-l border-border p-6 overflow-y-auto z-50 transform transition-transform duration-300"
       data-testid="settings-panel"
     >
       <div className="space-y-6">
@@ -61,7 +69,7 @@ export function SettingsPanel({
           <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
             Quick Presets
           </h3>
-          
+
           <div className="grid grid-cols-1 gap-2">
             {PRESET_MODES.map((preset) => (
               <Button
@@ -69,7 +77,9 @@ export function SettingsPanel({
                 variant={activePreset === preset.name ? "default" : "outline"}
                 className="p-3 h-auto text-left justify-start"
                 onClick={() => applyPreset(preset.name)}
-                data-testid={`button-preset-${preset.name.toLowerCase().replace(' ', '-')}`}
+                data-testid={`button-preset-${preset.name
+                  .toLowerCase()
+                  .replace(" ", "-")}`}
               >
                 <div className="flex items-center justify-between w-full">
                   <div>
@@ -92,12 +102,15 @@ export function SettingsPanel({
           <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
             Model Parameters
           </h3>
-          
+
           {/* Temperature */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-sm font-medium">Temperature</Label>
-              <span className="text-muted-foreground text-sm" data-testid="text-temperature">
+              <span
+                className="text-muted-foreground text-sm"
+                data-testid="text-temperature"
+              >
                 {config.temperature}
               </span>
             </div>
@@ -122,7 +135,10 @@ export function SettingsPanel({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-sm font-medium">Top P</Label>
-              <span className="text-muted-foreground text-sm" data-testid="text-top-p">
+              <span
+                className="text-muted-foreground text-sm"
+                data-testid="text-top-p"
+              >
                 {config.topP}
               </span>
             </div>
@@ -168,7 +184,9 @@ export function SettingsPanel({
               type="number"
               value={config.maxOutputTokens}
               onChange={(e) => {
-                onConfigChange({ maxOutputTokens: parseInt(e.target.value) || 0 });
+                onConfigChange({
+                  maxOutputTokens: parseInt(e.target.value) || 0,
+                });
                 setActivePreset(null);
               }}
               className="w-full"
@@ -184,18 +202,36 @@ export function SettingsPanel({
             <Label className="text-sm font-medium">Safety Level</Label>
             <Select
               value={config.safetyLevel}
-              onValueChange={(value: 'default' | 'strict' | 'none') => {
+              onValueChange={(value: "default" | "strict" | "none") => {
                 onConfigChange({ safetyLevel: value });
                 setActivePreset(null);
               }}
             >
-              <SelectTrigger data-testid="select-safety-level">
-                <SelectValue />
+              <SelectTrigger
+                className="bg-background border-border hover:bg-accent/10 focus:bg-accent/10 transition-colors"
+                data-testid="select-safety-level"
+              >
+                <SelectValue placeholder="Select safety level" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Default</SelectItem>
-                <SelectItem value="strict">Strict</SelectItem>
-                <SelectItem value="none">None</SelectItem>
+              <SelectContent className="bg-popover border-border shadow-lg">
+                <SelectItem
+                  value="default"
+                  className="hover:bg-accent focus:bg-accent cursor-pointer"
+                >
+                  Default
+                </SelectItem>
+                <SelectItem
+                  value="strict"
+                  className="hover:bg-accent focus:bg-accent cursor-pointer"
+                >
+                  Strict
+                </SelectItem>
+                <SelectItem
+                  value="none"
+                  className="hover:bg-accent focus:bg-accent cursor-pointer"
+                >
+                  None
+                </SelectItem>
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
@@ -204,24 +240,73 @@ export function SettingsPanel({
           </div>
 
           {/* Model Version */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Model Version</Label>
-            <Select
-              value={config.modelVersion}
-              onValueChange={(value: 'gemini-2.5-flash' | 'gemini-pro' | 'gemini-pro-vision') => {
-                onConfigChange({ modelVersion: value });
-                setActivePreset(null);
-              }}
-            >
-              <SelectTrigger data-testid="select-model-version">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="gemini-2.5-flash">Gemini 2.5 Flash</SelectItem>
-                <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
-                <SelectItem value="gemini-pro-vision">Gemini Pro Vision</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="space-y-1">
+            <div className="flex flex-col">
+              <Label className="text-sm font-medium leading-tight">
+                Model Version{" "}
+                <span className="block text-xs font-normal text-muted-foreground">
+                  (Only for Analysis)
+                </span>
+              </Label>
+              <span className="text-xs text-muted-foreground mt-0.5">
+                Image Editing only uses{" "}
+                <span className="font-semibold">
+                  gemini-2.5-flash-image-preview
+                </span>
+              </span>
+            </div>
+            <div className="mt-1">
+              <Select
+                value={config.modelVersion}
+                onValueChange={(
+                  value: "gemini-2.5-flash" | "gemini-pro" | "gemini-pro-vision"
+                ) => {
+                  onConfigChange({ modelVersion: value });
+                  setActivePreset(null);
+                }}
+              >
+                <SelectTrigger
+                  className="bg-background border-border hover:bg-accent/10 focus:bg-accent/10 transition-colors"
+                  data-testid="select-model-version"
+                >
+                  <SelectValue placeholder="Select model version" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border shadow-lg">
+                  <SelectItem
+                    value="gemini-2.5-flash-lite"
+                    className="hover:bg-accent focus:bg-accent cursor-pointer"
+                  >
+                    <div className="flex flex-col">
+                      <span>Gemini 2.5 Flash Lite</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="gemini-2.5-flash"
+                    className="hover:bg-accent focus:bg-accent cursor-pointer"
+                  >
+                    <div className="flex flex-col">
+                      <span>Gemini 2.5 Flash</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="gemini-pro"
+                    className="hover:bg-accent focus:bg-accent cursor-pointer"
+                  >
+                    <div className="flex flex-col">
+                      <span>Gemini Pro</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="gemini-pro-vision"
+                    className="hover:bg-accent focus:bg-accent cursor-pointer"
+                  >
+                    <div className="flex flex-col">
+                      <span>Gemini Pro Vision</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 
@@ -231,7 +316,7 @@ export function SettingsPanel({
           className="w-full"
           onClick={() => {
             onResetConfig();
-            setActivePreset('Stable');
+            setActivePreset("Stable");
           }}
           data-testid="button-reset-settings"
         >

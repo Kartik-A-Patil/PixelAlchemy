@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { useGemini } from '@/hooks/use-gemini';
-import { useToast } from '@/hooks/use-toast';
-import { 
-  ArrowLeft, 
-  Eye, 
-  EyeOff, 
-  Info, 
-  ExternalLink, 
-  Wand2, 
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useGemini } from "@/hooks/use-gemini";
+import { useToast } from "@/hooks/use-toast";
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  Info,
+  ExternalLink,
+  Wand2,
   Key,
   CheckCircle,
-  Shield
-} from 'lucide-react';
+  Shield,
+} from "lucide-react";
 
 export default function Setup() {
   const [, setLocation] = useLocation();
-  const [apiKey, setApiKey] = useState('');
+  const [apiKey, setApiKey] = useState("");
   const [showApiKey, setShowApiKey] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { setApiKey: saveApiKey, currentApiKey, isConfigured } = useGemini();
@@ -30,9 +30,9 @@ export default function Setup() {
   useEffect(() => {
     // If already configured, redirect to editor
     if (isConfigured) {
-      setLocation('/editor');
+      setLocation("/editor");
     }
-    
+
     // Load existing API key if available
     if (currentApiKey) {
       setApiKey(currentApiKey);
@@ -52,44 +52,35 @@ export default function Setup() {
     setIsSaving(true);
     try {
       saveApiKey(apiKey.trim());
-      
+
       // Small delay to show saving state
       setTimeout(() => {
-        setLocation('/editor');
+        setLocation("/editor");
       }, 1000);
-      
     } catch (error) {
       setIsSaving(false);
     }
   };
 
   const handleBack = () => {
-    setLocation('/');
+    setLocation("/");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 py-6">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Button
-            variant="ghost"
-            onClick={handleBack}
-            className="hover:bg-accent"
-            data-testid="button-back"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-          
-          
-        </div>
-      </header>
-
+    <div className="h-[95vh] bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
-         
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative mt-8">
+        <Button
+          variant="outline"
+          onClick={handleBack}
+          className="hover:bg-accent"
+          data-testid="button-back-left"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back
+        </Button>
+
+        <div className="w-full max-w-2xl">
           {/* Setup Card */}
           <Card className="border-2">
             <CardHeader className="text-center pb-6">
@@ -101,7 +92,7 @@ export default function Setup() {
                 Connect your Google Gemini API to start editing images with AI
               </p>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               {/* API Key Input */}
               <div className="space-y-2">
@@ -111,14 +102,14 @@ export default function Setup() {
                 <div className="relative">
                   <Input
                     id="api-key"
-                    type={showApiKey ? 'text' : 'password'}
+                    type={showApiKey ? "text" : "password"}
                     placeholder="Enter your Gemini API key..."
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                     className="h-12 text-base pr-12"
                     data-testid="input-api-key"
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
                         handleSave();
                       }
@@ -132,7 +123,11 @@ export default function Setup() {
                     onClick={() => setShowApiKey(!showApiKey)}
                     data-testid="button-toggle-visibility"
                   >
-                    {showApiKey ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    {showApiKey ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -146,8 +141,9 @@ export default function Setup() {
                       Your data is secure
                     </p>
                     <p className="text-green-700 dark:text-green-300">
-                      Your API key is stored locally in your browser and never sent to our servers. 
-                      We only use it to make requests directly to Google's Gemini API on your behalf.
+                      Your API key is stored locally in your browser and never
+                      sent to our servers. We only use it to make requests
+                      directly to Google's Gemini API on your behalf.
                     </p>
                   </div>
                 </div>
@@ -219,7 +215,8 @@ export default function Setup() {
           {/* Additional Info */}
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground">
-              Need help? The API key is free to get and allows you to make requests to Google's AI models.
+              Need help? The API key is free to get and allows you to make
+              requests to Google's AI models.
             </p>
           </div>
         </div>
